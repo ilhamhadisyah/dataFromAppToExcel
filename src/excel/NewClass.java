@@ -10,8 +10,9 @@ package excel;
  */
 public class NewClass {
     public static void main(String[] args){
-        UI ui = new UI();
-        ui.setVisible(true);
+        usernameLogin user= new usernameLogin();
+        user.setVisible(true);
+        user.setLocationRelativeTo(null);
         
     }
 }

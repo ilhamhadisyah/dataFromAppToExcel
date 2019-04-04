@@ -19,6 +19,7 @@ public class UI extends javax.swing.JFrame {
     /**
      * Creates new form UI
      */
+    static String username;
     public UI() {
         
         initComponents();
@@ -36,6 +37,7 @@ public class UI extends javax.swing.JFrame {
             }
         }.start();
         palletCode.requestFocus();
+        usern.setText("admin : "+username);
     }
     
     
@@ -49,6 +51,7 @@ public class UI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        usern = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         dataTable = new javax.swing.JTable();
         palletCode = new javax.swing.JTextField();
@@ -75,17 +78,28 @@ public class UI extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setLayout(null);
 
+        usern.setText("admin");
+        jPanel1.add(usern);
+        usern.setBounds(500, 10, 230, 20);
+
         dataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No", "Pallet Code", "Lot Code", "Line Code", "Time", "Remark", "Date"
+                "No", "Pallet Code", "Lot Code", "Line Code", "Time", "Remark", "Date", "admin"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -96,6 +110,14 @@ public class UI extends javax.swing.JFrame {
         dataTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(dataTable);
         dataTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (dataTable.getColumnModel().getColumnCount() > 0) {
+            dataTable.getColumnModel().getColumn(0).setMinWidth(26);
+            dataTable.getColumnModel().getColumn(0).setMaxWidth(26);
+            dataTable.getColumnModel().getColumn(4).setMinWidth(50);
+            dataTable.getColumnModel().getColumn(4).setMaxWidth(50);
+            dataTable.getColumnModel().getColumn(5).setMinWidth(50);
+            dataTable.getColumnModel().getColumn(5).setMaxWidth(60);
+        }
 
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(0, 0, 490, 490);
@@ -160,7 +182,7 @@ public class UI extends javax.swing.JFrame {
 
         clock.setText("00:00:00");
         jPanel1.add(clock);
-        clock.setBounds(740, 10, 50, 14);
+        clock.setBounds(740, 10, 50, 20);
 
         exportExcel.setText("Export");
         exportExcel.addActionListener(new java.awt.event.ActionListener() {
@@ -242,8 +264,8 @@ public class UI extends javax.swing.JFrame {
             a.add(lineCode.getText());
             a.add(clock.getText());
             a.add(remark.getItemAt(remark.getSelectedIndex()));
-            
             a.add(tgl);
+            a.add(username);
             table.addRow(a);
 
             palletCode.setText("");
@@ -421,5 +443,6 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JTextField lotCode;
     private javax.swing.JTextField palletCode;
     private javax.swing.JComboBox<String> remark;
+    private javax.swing.JLabel usern;
     // End of variables declaration//GEN-END:variables
 }
