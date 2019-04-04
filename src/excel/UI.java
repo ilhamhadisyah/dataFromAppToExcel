@@ -35,6 +35,7 @@ public class UI extends javax.swing.JFrame {
                 }
             }
         }.start();
+        palletCode.requestFocus();
     }
     
     
@@ -56,7 +57,7 @@ public class UI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        insert = new javax.swing.JButton();
         clock = new javax.swing.JLabel();
         exportExcel = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -105,14 +106,29 @@ public class UI extends javax.swing.JFrame {
             }
         });
         palletCode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                palletCodeKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 palletCodeKeyTyped(evt);
             }
         });
         jPanel1.add(palletCode);
         palletCode.setBounds(530, 70, 230, 20);
+
+        lotCode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lotCodeKeyPressed(evt);
+            }
+        });
         jPanel1.add(lotCode);
         lotCode.setBounds(530, 120, 230, 20);
+
+        lineCode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lineCodeKeyPressed(evt);
+            }
+        });
         jPanel1.add(lineCode);
         lineCode.setBounds(530, 170, 140, 20);
 
@@ -128,19 +144,19 @@ public class UI extends javax.swing.JFrame {
         jPanel1.add(jLabel3);
         jLabel3.setBounds(530, 150, 100, 20);
 
-        jButton1.setText("insert");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        insert.setText("insert");
+        insert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                insertActionPerformed(evt);
             }
         });
-        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+        insert.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButton1KeyPressed(evt);
+                insertKeyPressed(evt);
             }
         });
-        jPanel1.add(jButton1);
-        jButton1.setBounds(670, 210, 90, 20);
+        jPanel1.add(insert);
+        insert.setBounds(670, 210, 90, 20);
 
         clock.setText("00:00:00");
         jPanel1.add(clock);
@@ -177,6 +193,11 @@ public class UI extends javax.swing.JFrame {
         jLabel4.setBounds(530, 260, 60, 14);
 
         remark.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Delivery", "Pindah" }));
+        remark.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                remarkKeyPressed(evt);
+            }
+        });
         jPanel1.add(remark);
         remark.setBounds(670, 170, 90, 20);
 
@@ -194,7 +215,7 @@ public class UI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
         // TODO add your handling code here:
         
         
@@ -231,6 +252,7 @@ public class UI extends javax.swing.JFrame {
    
         
         }
+        palletCode.requestFocus();
         
        
         
@@ -238,7 +260,7 @@ public class UI extends javax.swing.JFrame {
         
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_insertActionPerformed
 
     private void palletCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_palletCodeActionPerformed
 
@@ -250,9 +272,9 @@ public class UI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_palletCodeKeyTyped
 
-    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+    private void insertKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_insertKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1KeyPressed
+    }//GEN-LAST:event_insertKeyPressed
 
     private void exportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportExcelActionPerformed
         // TODO add your handling code here:   
@@ -315,6 +337,35 @@ public class UI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fileNameActionPerformed
 
+    private void palletCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_palletCodeKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()== evt.VK_ENTER)
+        lotCode.requestFocus();
+    }//GEN-LAST:event_palletCodeKeyPressed
+
+    private void lotCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lotCodeKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()== evt.VK_ENTER)
+        lineCode.requestFocus();
+    }//GEN-LAST:event_lotCodeKeyPressed
+
+    private void lineCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lineCodeKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()== evt.VK_ENTER){
+        remark.requestFocus();
+        remark.showPopup();
+        }
+        
+        
+    }//GEN-LAST:event_lineCodeKeyPressed
+
+    private void remarkKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_remarkKeyPressed
+        // TODO add your handling code here:
+        
+        if(evt.getKeyCode()== evt.VK_ENTER)
+        insert.doClick();
+    }//GEN-LAST:event_remarkKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -357,7 +408,7 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JButton exportExcel;
     private javax.swing.JLabel fileDir;
     private javax.swing.JTextField fileName;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton insert;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
