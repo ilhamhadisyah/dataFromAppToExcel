@@ -50,6 +50,7 @@ public class UI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         usern = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -70,9 +71,13 @@ public class UI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         fileDir = new javax.swing.JLabel();
         date = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(811, 487));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
@@ -231,6 +236,20 @@ public class UI extends javax.swing.JFrame {
         jPanel1.add(date);
         date.setBounds(500, 10, 0, 0);
 
+        jPanel2.setBackground(new java.awt.Color(0, 204, 0));
+        jPanel2.setLayout(null);
+
+        jPanel3.setBackground(new java.awt.Color(128, 128, 128));
+        jPanel2.add(jPanel3);
+        jPanel3.setBounds(0, -5, 110, 40);
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(550, 330, 110, 40);
+
+        jPanel4.setBackground(new java.awt.Color(128, 128, 128));
+        jPanel1.add(jPanel4);
+        jPanel4.setBounds(660, 330, 100, 40);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 810, 490);
 
@@ -314,6 +333,7 @@ public class UI extends javax.swing.JFrame {
         FileWriter excel = new FileWriter(directory+'/'+file+".xls");
         for(int i = 0; i < model.getColumnCount(); i++){
             excel.write(model.getColumnName(i) + "\t");
+            
         }
 
         excel.write("\n");
@@ -438,6 +458,10 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField lineCode;
     private javax.swing.JTextField lotCode;
