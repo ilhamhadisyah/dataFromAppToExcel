@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.plaf.TableUI;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -38,6 +40,7 @@ public class UI extends javax.swing.JFrame {
         }.start();
         palletCode.requestFocus();
         usern.setText("admin : "+username);
+        
     }
     
     
@@ -71,18 +74,18 @@ public class UI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         fileDir = new javax.swing.JLabel();
         date = new javax.swing.JLabel();
+        update = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(811, 487));
+        setMinimumSize(new java.awt.Dimension(810, 520));
+        setPreferredSize(new java.awt.Dimension(810, 520));
         setResizable(false);
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel1.setLayout(null);
 
         usern.setText("admin");
-        jPanel1.add(usern);
-        usern.setBounds(500, 10, 230, 20);
 
         dataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -110,6 +113,11 @@ public class UI extends javax.swing.JFrame {
         dataTable.setColumnSelectionAllowed(true);
         dataTable.setDragEnabled(true);
         dataTable.getTableHeader().setReorderingAllowed(false);
+        dataTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dataTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(dataTable);
         dataTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (dataTable.getColumnModel().getColumnCount() > 0) {
@@ -120,9 +128,6 @@ public class UI extends javax.swing.JFrame {
             dataTable.getColumnModel().getColumn(5).setMinWidth(50);
             dataTable.getColumnModel().getColumn(5).setMaxWidth(60);
         }
-
-        jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(0, 0, 490, 490);
 
         palletCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,38 +142,26 @@ public class UI extends javax.swing.JFrame {
                 palletCodeKeyTyped(evt);
             }
         });
-        jPanel1.add(palletCode);
-        palletCode.setBounds(530, 70, 230, 20);
 
         lotCode.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 lotCodeKeyPressed(evt);
             }
         });
-        jPanel1.add(lotCode);
-        lotCode.setBounds(530, 120, 230, 20);
 
         lineCode.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 lineCodeKeyPressed(evt);
             }
         });
-        jPanel1.add(lineCode);
-        lineCode.setBounds(530, 170, 140, 20);
 
         jLabel1.setText("Pallet Code");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(530, 50, 140, 14);
 
         jLabel2.setText("Lot Code");
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(530, 100, 130, 14);
 
         jLabel3.setText("Line Code");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(530, 150, 100, 20);
 
-        insert.setText("insert");
+        insert.setText("Insert");
         insert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertActionPerformed(evt);
@@ -179,12 +172,8 @@ public class UI extends javax.swing.JFrame {
                 insertKeyPressed(evt);
             }
         });
-        jPanel1.add(insert);
-        insert.setBounds(670, 210, 90, 20);
 
         clock.setText("00:00:00");
-        jPanel1.add(clock);
-        clock.setBounds(740, 10, 50, 20);
 
         exportExcel.setText("Export");
         exportExcel.addActionListener(new java.awt.event.ActionListener() {
@@ -192,8 +181,6 @@ public class UI extends javax.swing.JFrame {
                 exportExcelActionPerformed(evt);
             }
         });
-        jPanel1.add(exportExcel);
-        exportExcel.setBounds(670, 280, 90, 23);
 
         jButton2.setText("Save As");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -201,20 +188,14 @@ public class UI extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2);
-        jButton2.setBounds(530, 230, 90, 23);
 
         fileName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fileNameActionPerformed(evt);
             }
         });
-        jPanel1.add(fileName);
-        fileName.setBounds(530, 280, 140, 20);
 
         jLabel4.setText("File Name");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(530, 260, 60, 14);
 
         remark.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Delivery", "Pindah" }));
         remark.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -222,16 +203,113 @@ public class UI extends javax.swing.JFrame {
                 remarkKeyPressed(evt);
             }
         });
-        jPanel1.add(remark);
-        remark.setBounds(670, 170, 90, 20);
 
         jLabel5.setText("Remark");
-        jPanel1.add(jLabel5);
-        jLabel5.setBounds(670, 150, 50, 20);
-        jPanel1.add(fileDir);
-        fileDir.setBounds(620, 230, 140, 20);
-        jPanel1.add(date);
-        date.setBounds(500, 10, 0, 0);
+
+        update.setText("Update");
+        update.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                updateMouseClicked(evt);
+            }
+        });
+
+        jButton1.setText("Delete");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(date)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(usern, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(clock, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(palletCode, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lotCode, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lineCode, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(remark, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(fileDir, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(0, 0, 0)
+                                            .addComponent(exportExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jButton1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(update)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(insert)))))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(usern, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(date)
+                    .addComponent(clock, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1)
+                .addGap(6, 6, 6)
+                .addComponent(palletCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jLabel2)
+                .addGap(6, 6, 6)
+                .addComponent(lotCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lineCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(remark, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(insert)
+                    .addComponent(update)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(fileDir, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addComponent(jLabel4)
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exportExcel))
+                .addGap(45, 45, 45))
+        );
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 810, 490);
@@ -244,7 +322,7 @@ public class UI extends javax.swing.JFrame {
         
         
         
-        DefaultTableModel table = (DefaultTableModel) dataTable.getModel();
+        DefaultTableModel table =(DefaultTableModel) dataTable.getModel();
         Vector a = new Vector();
         if(palletCode.getText().trim().isEmpty()){
             JOptionPane.showMessageDialog(rootPane, "null");
@@ -254,9 +332,14 @@ public class UI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "null");
         }
         else{
-            int n=1;
+            
+            int n = 1;
             for(int e=0;e<table.getRowCount();e++){
-                n +=1;
+            //int lastRow = dataTable.convertRowIndexToView(table.getRowCount() - 1);
+            //dataTable.setRowSelectionInterval(lastRow, lastRow);
+            //int row = dataTable.getSelectedRow();
+            //n+= Integer.parseInt((String) dataTable.getValueAt(row, 0));
+            n +=1;
             }
             String tgl = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             
@@ -270,9 +353,7 @@ public class UI extends javax.swing.JFrame {
             a.add(username);
             table.addRow(a);
 
-            palletCode.setText("");
-            lotCode.setText("");
-            lineCode.setText("");
+            EmptyField();
    
         
         }
@@ -285,6 +366,12 @@ public class UI extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_insertActionPerformed
+
+    public void EmptyField() {
+        palletCode.setText("");
+        lotCode.setText("");
+        lineCode.setText("");
+    }
 
     private void palletCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_palletCodeActionPerformed
 
@@ -332,7 +419,7 @@ public class UI extends javax.swing.JFrame {
 
     }catch(IOException e){ System.out.println(e); }
         JOptionPane.showMessageDialog(palletCode, "Saved !");
-        fileDir.setText("");
+        fileDir.setText(":");
         fileName.setText("");
    }
         
@@ -391,6 +478,39 @@ public class UI extends javax.swing.JFrame {
         insert.doClick();
     }//GEN-LAST:event_remarkKeyPressed
 
+    private void dataTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dataTableMouseClicked
+        // TODO add your handling code here:
+        int row = dataTable.getSelectedRow();
+        palletCode.setText(dataTable.getValueAt(row, 1).toString());
+        lotCode.setText(dataTable.getValueAt(row, 2).toString());
+        lineCode.setText(dataTable.getValueAt(row, 3).toString());
+    }//GEN-LAST:event_dataTableMouseClicked
+
+    private void updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseClicked
+        // TODO add your handling code here:
+        int row = dataTable.getSelectedRow();
+        dataTable.setValueAt(palletCode.getText(), row, 1);
+        dataTable.setValueAt(lotCode.getText(), row, 2);
+        dataTable.setValueAt(lineCode.getText(), row, 3);
+        dataTable.setValueAt(clock.getText(), row, 4);
+        dataTable.setValueAt(remark.getSelectedItem(), row, 5);
+        EmptyField();
+       
+    }//GEN-LAST:event_updateMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int row = 010101010101;
+         row = dataTable.getSelectedRow();
+        if (row == 010101010101){
+            JOptionPane.showMessageDialog(rootPane, "please enter a row");
+        }else{
+        DefaultTableModel model =(DefaultTableModel) dataTable.getModel();
+        model.removeRow(row);
+        EmptyField();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -434,6 +554,7 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JLabel fileDir;
     private javax.swing.JTextField fileName;
     private javax.swing.JButton insert;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -447,6 +568,7 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JTextField lotCode;
     private javax.swing.JTextField palletCode;
     private javax.swing.JComboBox<String> remark;
+    private javax.swing.JButton update;
     private javax.swing.JLabel usern;
     // End of variables declaration//GEN-END:variables
 }
